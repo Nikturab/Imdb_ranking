@@ -1,0 +1,110 @@
+﻿@page "/"
+
+@using MovieRanking.Data
+@inject MovieService MovieService
+
+<h1>Top Movies</h1>
+
+@if (_movies == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <div class="row">
+        <div class="col-8">
+            <input type="text"  @bind-value="@search" class="form-control-sm" placeholder="search movie..." />
+            <button class="btn-secondary"  @onclick="@searchFor">Search</button>
+        </div>
+    </div>
+    
+    @if (_page > 1)
+    {
+        <button style="float:right;" @onclick="@PrevPage"> ← </button>
+    }
+    
+    
+    @if (_page * 10 < _total)
+    {
+        <button style="float:left;" @onclick="@NextPage"> → </button>
+    }
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Rate</th>
+            <th>Director</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var sm in _movies)
+        {
+            <tr>
+                <td>#@sm.Id</td>
+                <td><a href="/movie/@sm.Id">@sm.Title</a></td>
+                <td>@sm.Rate</td>
+                <td><a href="/actor/@sm.PersonId">@sm.Director.Name</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    @if (_page > 1)
+    {
+        <button style="float:right;" @onclick="@PrevPage"> ← </button>
+    }
+    
+    
+    @if (_page * 10 < _total)
+    {
+        <button style="float:left;" @onclick="@NextPage"> → </button>
+    }
+
+
+}
+
+@code {
+    Movie[] _movies;
+    //
+    int _page = 1;
+    int _total = 0;
+    private string search = "";
+
+    
+    
+    
+    protected override async Task OnInitializedAsync()
+    {
+        LoadPage();
+    }
+    //
+    private async void LoadPage()
+    {
+        _movies = await MovieService.GetMoviesAsync(_page, search);
+        _total = await MovieService.GetTotalCount();
+    }
+    
+    private void NextPage()
+    {
+        _page++;
+        LoadPage();
+    }
+
+    private void searchFor()
+    {
+        _page = 1;
+        LoadPage();
+    }
+    
+    
+    private void PrevPage()
+    {
+        _page--;
+        LoadPage();
+    }
+
+}

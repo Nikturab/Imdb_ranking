@@ -1,0 +1,57 @@
+﻿@page "/tag/{tagId}"
+
+@using MovieRanking.Data
+@inject MovieService MovieService
+
+<h1>Tag info: @tagId</h1>
+
+@if (movies == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    
+    
+    <center><h4>Top 20 movies by tag</h4></center>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title </th>
+            <th>Rate </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var sm in movies)
+        {
+            <tr>
+                <td>#@sm.Id</td>
+                <td><a href="/movie/@sm.Id">@sm.Title</a></td>
+                <td>@sm.Rate</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+
+}
+
+@code {
+    [Parameter] public string tagId  { get; set; }
+
+    Movie[] movies;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        movies = await MovieService.GetTopByTag(tagId);
+    }
+    
+    protected override async Task OnParametersSetAsync()
+    {
+        await OnInitializedAsync();
+    }
+
+}

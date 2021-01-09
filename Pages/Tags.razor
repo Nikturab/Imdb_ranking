@@ -1,0 +1,43 @@
+﻿@page "/tags"
+
+@using MovieRanking.Data
+@inject MovieService MovieService
+
+<h1>Tags cloud</h1>
+
+@if (_tags == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    @foreach (var tag in _tags)
+    {
+        <a href="/tag/@tag.TagId">@tag.TagId | </a>
+    }
+
+
+}
+
+@code {
+    Tag[] _tags;
+    
+
+    
+    
+    
+    protected override async Task OnInitializedAsync()
+    {
+        LoadPage();
+    }
+    //
+    private async void LoadPage()
+    {
+        _tags = await MovieService.GetAllTags();
+    }
+    
+  
+
+}

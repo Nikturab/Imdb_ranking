@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="Pages\MovieInfo.razor">
+        <Generator>MSBuild:RazorGenerateComponentDeclarationDesignTime</Generator>
+      </Content>
+      <Content Update="Pages\ActorInfo.razor">
+        <Generator>MSBuild:RazorGenerateComponentDeclarationDesignTime</Generator>
+      </Content>
+      <Content Update="Pages\TagInfo.razor">
+        <Generator>MSBuild:RazorGenerateComponentDeclarationDesignTime</Generator>
+      </Content>
+      <Content Update="Pages\Actors.razor">
+        <Generator>MSBuild:RazorGenerateComponentDeclarationDesignTime</Generator>
+      </Content>
+      <Content Update="Pages\Tags.razor">
+        <Generator>MSBuild:RazorGenerateComponentDeclarationDesignTime</Generator>
+      </Content>
+    </ItemGroup>
+
+</Project>
